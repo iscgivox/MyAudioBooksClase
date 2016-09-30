@@ -68,10 +68,7 @@ public class DetalleFragment extends Fragment {
     private void setUpBookInfo(int index,
                                View inflatedView) {
 
-        TextView txtTitulo = (TextView)inflatedView.findViewById(R.id.textView1);
-        TextView txtAutor = (TextView)inflatedView.findViewById(R.id.textView2);
 
-        ImageView img = (ImageView)inflatedView.findViewById(R.id.imageView1);
 
     }
 
