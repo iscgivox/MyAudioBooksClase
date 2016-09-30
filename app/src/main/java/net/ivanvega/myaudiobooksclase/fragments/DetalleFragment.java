@@ -1,6 +1,7 @@
 package net.ivanvega.myaudiobooksclase.fragments;
 
 import android.content.Context;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.ivanvega.myaudiobooksclase.R;
@@ -66,7 +68,10 @@ public class DetalleFragment extends Fragment {
     private void setUpBookInfo(int index,
                                View inflatedView) {
 
-        TextView txtTitulo = (TextView)inflatedView.findViewById(R.id.txtTitulo);
+        TextView txtTitulo = (TextView)inflatedView.findViewById(R.id.textView1);
+        TextView txtAutor = (TextView)inflatedView.findViewById(R.id.textView2);
+
+        ImageView img = (ImageView)inflatedView.findViewById(R.id.imageView1);
 
     }
 
