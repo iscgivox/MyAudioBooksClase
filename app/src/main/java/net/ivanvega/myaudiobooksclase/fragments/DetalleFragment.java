@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.ivanvega.myaudiobooksclase.R;
+import net.ivanvega.myaudiobooksclase.modelo.BookInfo;
+import net.ivanvega.myaudiobooksclase.modelo.DAOBookInfo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,8 +42,8 @@ public class DetalleFragment extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -67,11 +69,19 @@ public class DetalleFragment extends Fragment {
 
     private void setUpBookInfo(int index,
                                View inflatedView) {
+        BookInfo book =
+                DAOBookInfo.getAllBooks().get(index);
 
-        TextView txtTitulo = (TextView)inflatedView.findViewById(R.id.textView1);
-        TextView txtAutor = (TextView)inflatedView.findViewById(R.id.textView2);
+        TextView txtTitulo =
+                (TextView)inflatedView.findViewById(R.id.textView1);
+        TextView txtAutor =
+                (TextView)inflatedView.findViewById(R.id.textView2);
+        ImageView img =
+                (ImageView)inflatedView.findViewById(R.id.imageView1);
 
-        ImageView img = (ImageView)inflatedView.findViewById(R.id.imageView1);
+        txtTitulo.setText(book.getName());
+        txtAutor.setText(book.getAutor());
+        img.setImageResource(book.getResourceImage());
 
     }
 
@@ -90,18 +100,5 @@ public class DetalleFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
 }

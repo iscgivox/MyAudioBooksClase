@@ -4,9 +4,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
 
+import net.ivanvega.myaudiobooksclase.fragments.DetalleFragment;
+import net.ivanvega.myaudiobooksclase.fragments.SelectorFragment;
 import net.ivanvega.myaudiobooksclase.modelo.DAOBookInfo;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+
+{
     GridView grv ;
 
 
@@ -14,6 +18,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_principal);
+
+        if (findViewById(R.id.fragment_container) != null
+                && savedInstanceState ==null
+                )
+        {
+            SelectorFragment primerFragment =
+                    new SelectorFragment();
+            getSupportFragmentManager().
+                    beginTransaction()
+                    .add(R.id.fragment_container,primerFragment)
+                    .commit();
+        }
 
 //        grv = (GridView)findViewById(R.id.gridView);
 //
