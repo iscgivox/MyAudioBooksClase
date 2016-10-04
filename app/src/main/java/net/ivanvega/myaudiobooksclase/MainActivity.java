@@ -1,15 +1,19 @@
 package net.ivanvega.myaudiobooksclase;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.GridView;
 
 import net.ivanvega.myaudiobooksclase.fragments.DetalleFragment;
+import net.ivanvega.myaudiobooksclase.fragments.OnFragmentInteractionListener;
 import net.ivanvega.myaudiobooksclase.fragments.SelectorFragment;
 import net.ivanvega.myaudiobooksclase.modelo.DAOBookInfo;
 
 public class MainActivity extends AppCompatActivity
-
+implements OnFragmentInteractionListener
 {
     GridView grv ;
 
@@ -51,6 +55,34 @@ public class MainActivity extends AppCompatActivity
 //                        .setAction("Action", null).show();
 //            }
 //        });
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        DetalleFragment detalleFragment =
+                (DetalleFragment)
+                        getSupportFragmentManager()
+                .findFragmentById(R.id.detalle_fragment);
+
+        if (detalleFragment != null){
+            detalleFragment.
+                    updateBookView( Integer.parseInt( uri.toString()));
+        }else{
+            DetalleFragment nuevoFragment
+                    = new DetalleFragment();
+            Bundle args = new Bundle();
+            args.putInt(DetalleFragment.ARG_POSITION,
+                    Integer.parseInt( uri.toString()));
+            nuevoFragment.setArguments(args);
+            FragmentTransaction transaccion =
+                    getSupportFragmentManager().beginTransaction();
+
+            transaccion.replace(R.id.fragment_container, nuevoFragment);
+            transaccion.addToBackStack(null);
+            transaccion.commit();
+
+        }
+
     }
 
 //    @Override

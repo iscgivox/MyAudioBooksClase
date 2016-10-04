@@ -2,6 +2,7 @@ package net.ivanvega.myaudiobooksclase.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,7 +26,7 @@ public class SelectorFragment extends Fragment {
     AppCompatActivity activity;
     GridView gridView;
     SelectorAdapter adaptador;
-
+    private OnFragmentInteractionListener mListener;
 
 
     @Override
@@ -34,6 +35,12 @@ public class SelectorFragment extends Fragment {
         super.onAttach(context);
         this.activity =
                 (AppCompatActivity) context;
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Nullable
@@ -65,6 +72,10 @@ public class SelectorFragment extends Fragment {
                                             View view,
                                             int position,
                                             long id) {
+
+                        mListener.onFragmentInteraction(
+                                Uri.parse(String.valueOf(position))
+                        );
 
                     }
                 }

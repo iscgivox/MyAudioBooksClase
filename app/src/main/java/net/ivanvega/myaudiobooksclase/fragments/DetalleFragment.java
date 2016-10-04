@@ -82,7 +82,9 @@ public class DetalleFragment extends Fragment {
         txtTitulo.setText(book.getName());
         txtAutor.setText(book.getAutor());
         img.setImageResource(book.getResourceImage());
-
+    }
+    public void updateBookView(int position){
+        setUpBookInfo(position, getView());
     }
 
     // TODO: Rename method, update argument and hook method into UI event
