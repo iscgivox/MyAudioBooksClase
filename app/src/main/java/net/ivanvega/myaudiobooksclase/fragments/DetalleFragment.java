@@ -2,19 +2,25 @@ package net.ivanvega.myaudiobooksclase.fragments;
 
 import android.content.Context;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 
 import net.ivanvega.myaudiobooksclase.R;
 import net.ivanvega.myaudiobooksclase.modelo.BookInfo;
 import net.ivanvega.myaudiobooksclase.modelo.DAOBookInfo;
+
+import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,12 +30,30 @@ import net.ivanvega.myaudiobooksclase.modelo.DAOBookInfo;
  * Use the {@link DetalleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DetalleFragment extends Fragment {
+public class DetalleFragment extends Fragment
+implements MediaPlayer.OnPreparedListener,
+        MediaController.MediaPlayerControl,
+        View.OnTouchListener
+{
 
     public static String ARG_POSITION = "index";
     AppCompatActivity activity;
 
     private OnFragmentInteractionListener mListener;
+
+    MediaPlayer mediaPlayer;
+    MediaController mediaController;
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        try {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }catch (Exception e){
+            Log.d("MYSUPERAUDIOLIBROS",e.getMessage());
+        }
+    }
 
     public DetalleFragment() {
         // Required empty public constructor
@@ -82,7 +106,24 @@ public class DetalleFragment extends Fragment {
         txtTitulo.setText(book.getName());
         txtAutor.setText(book.getAutor());
         img.setImageResource(book.getResourceImage());
+
+        inflatedView.setOnTouchListener(this);
+        Uri audio = Uri.parse(book.getUrl());
+
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setOnPreparedListener(this);
+
+        try{
+            mediaPlayer.setDataSource(activity, audio);
+            mediaPlayer.prepareAsync();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mediaController = new MediaController(activity);
+
     }
+
     public void updateBookView(int position){
         setUpBookInfo(position, getView());
     }
@@ -92,6 +133,8 @@ public class DetalleFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+
+
     }
 
 
@@ -103,4 +146,72 @@ public class DetalleFragment extends Fragment {
     }
 
 
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        mediaController.setMediaPlayer(this);
+        mediaController.setAnchorView(
+                activity.findViewById(R.id.main_fragment_detalle)
+        );
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        mediaController.show();
+        return false;
+    }
+
+    @Override
+    public void start() {
+        mediaPlayer.start();
+    }
+
+    @Override
+    public void pause() {
+        mediaPlayer.pause();
+    }
+
+    @Override
+    public int getDuration() {
+        return mediaPlayer.getDuration();
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        return mediaPlayer.getCurrentPosition();
+    }
+
+    @Override
+    public void seekTo(int pos) {
+        mediaPlayer.seekTo(pos);
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return mediaPlayer.isPlaying();
+    }
+
+    @Override
+    public int getBufferPercentage() {
+        return 0;
+    }
+
+    @Override
+    public boolean canPause() {
+        return true;
+    }
+
+    @Override
+    public boolean canSeekBackward() {
+        return true;
+    }
+
+    @Override
+    public boolean canSeekForward() {
+        return true;
+    }
+
+    @Override
+    public int getAudioSessionId() {
+        return 0;
+    }
 }
