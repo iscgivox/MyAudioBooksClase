@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.ivanvega.myaudiobooksclase.R;
 import net.ivanvega.myaudiobooksclase.modelo.BookInfo;
@@ -116,6 +117,7 @@ implements MediaPlayer.OnPreparedListener,
         try{
             mediaPlayer.setDataSource(activity, audio);
             mediaPlayer.prepareAsync();
+            Toast.makeText(activity,"Descargando...", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -152,6 +154,7 @@ implements MediaPlayer.OnPreparedListener,
         mediaController.setAnchorView(
                 activity.findViewById(R.id.main_fragment_detalle)
         );
+        Toast.makeText(activity,"Presione para reproducir", Toast.LENGTH_SHORT).show();
     }
 
     @Override
