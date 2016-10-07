@@ -2,6 +2,7 @@ package net.ivanvega.myaudiobooksclase.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,8 @@ import android.widget.GridView;
 import net.ivanvega.myaudiobooksclase.R;
 import net.ivanvega.myaudiobooksclase.SelectorAdapter;
 import net.ivanvega.myaudiobooksclase.modelo.DAOBookInfo;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by SERVIDOR on 26/09/2016.
@@ -76,6 +79,9 @@ public class SelectorFragment extends Fragment {
                         mListener.onFragmentInteraction(
                                 Uri.parse(String.valueOf(position))
                         );
+
+                        SharedPreferences pref =  activity.getSharedPreferences("net.ivanvegaaudiolibros_internal", MODE_PRIVATE);
+                        pref.edit().putInt("position",position).commit();
 
                     }
                 }

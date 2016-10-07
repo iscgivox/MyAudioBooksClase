@@ -1,11 +1,17 @@
 package net.ivanvega.myaudiobooksclase;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.SharedPreferencesCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import net.ivanvega.myaudiobooksclase.fragments.DetalleFragment;
 import net.ivanvega.myaudiobooksclase.fragments.OnFragmentInteractionListener;
@@ -21,7 +27,7 @@ implements OnFragmentInteractionListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_principal);
+        setContentView(R.layout.activity_main);
 
         if (findViewById(R.id.fragment_container) != null
                 && savedInstanceState ==null
@@ -44,8 +50,8 @@ implements OnFragmentInteractionListener
 //        grv.setAdapter(adp);
 
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 //
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -85,25 +91,42 @@ implements OnFragmentInteractionListener
 
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        switch (id){
+            case R.id.menu_preferencias:
+                Toast.makeText(this,"Preferencias", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_ultimo:
+                goToLastVVisisted();
+        }
+
+
+        return false;
+    }
+
+    private void goToLastVVisisted() {
+        SharedPreferences pref =  getSharedPreferences("net.ivanvegaaudiolibros_internal", MODE_PRIVATE);
+
+        int position = pref.getInt("position",-1);
+        if (position>0){
+            onFragmentInteraction(Uri.parse(String.valueOf(position)));
+        }else{
+            Toast.makeText(this,"Sin última visita", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 }
