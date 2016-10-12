@@ -1,11 +1,13 @@
 package net.ivanvega.myaudiobooksclase;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.SharedPreferencesCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -109,9 +111,18 @@ implements OnFragmentInteractionListener
         switch (id){
             case R.id.menu_preferencias:
                 Toast.makeText(this,"Preferencias", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, PreferenciasActivity.class));
                 break;
             case R.id.menu_ultimo:
                 goToLastVVisisted();
+                break;
+            case R.id.menu_acerca:
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setMessage("Acerca de...");
+                dialog.setPositiveButton(android.R.string.ok, null);
+                dialog.create().show();
+                break;
+
         }
 
 
