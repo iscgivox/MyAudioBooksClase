@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.SharedPreferencesCompat;
@@ -20,6 +22,8 @@ import net.ivanvega.myaudiobooksclase.fragments.OnFragmentInteractionListener;
 import net.ivanvega.myaudiobooksclase.fragments.SelectorFragment;
 import net.ivanvega.myaudiobooksclase.modelo.DAOBookInfo;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity
 implements OnFragmentInteractionListener
 {
@@ -30,6 +34,8 @@ implements OnFragmentInteractionListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         if (findViewById(R.id.fragment_container) != null
                 && savedInstanceState ==null

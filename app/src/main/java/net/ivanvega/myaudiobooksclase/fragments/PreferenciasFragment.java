@@ -16,12 +16,14 @@ import net.ivanvega.myaudiobooksclase.R;
 public class PreferenciasFragment extends PreferenceFragmentCompat
 {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //setPreferencesFromResource(R.xml.preferencias,"hi");
-        //addPreferencesFromResource(R.xml.preferencias);
-    }
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        //setPreferencesFromResource(R.xml.preferencias,"hi");
+//        addPreferencesFromResource(R.xml.preferencias);
+//    }
+
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
