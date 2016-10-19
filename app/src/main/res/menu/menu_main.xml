@@ -22,7 +22,7 @@
         android:actionViewClass="android.widget.SearchView"
         android:icon="@android:drawable/ic_menu_search"
         android:orderInCategory="90"
-        app:showAsAction="always|collapseActionView"
+        app:showAsAction="ifRoom|collapseActionView"
         android:title="Buscar"
 
         />

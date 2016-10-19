@@ -2,22 +2,28 @@ package net.ivanvega.myaudiobooksclase.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import net.ivanvega.myaudiobooksclase.R;
 import net.ivanvega.myaudiobooksclase.SelectorAdapter;
+import net.ivanvega.myaudiobooksclase.modelo.BookInfo;
 import net.ivanvega.myaudiobooksclase.modelo.DAOBookInfo;
+
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -30,6 +36,7 @@ public class SelectorFragment extends Fragment {
     GridView gridView;
     SelectorAdapter adaptador;
     private OnFragmentInteractionListener mListener;
+    private List<BookInfo> lstBooks;
 
 
     @Override
@@ -63,8 +70,10 @@ public class SelectorFragment extends Fragment {
                 inflatedView.findViewById
                         (R.id.gridView);
 
+        lstBooks = DAOBookInfo.getAllBooks();
+        
         adaptador  = new SelectorAdapter(activity,
-                DAOBookInfo.getAllBooks());
+                lstBooks);
 
         gridView.setAdapter(adaptador);
 
@@ -86,6 +95,35 @@ public class SelectorFragment extends Fragment {
                     }
                 }
         );
+
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                CharSequence [] menu = {"Compartir", "Borrar","Insertar"};
+                builder.setItems(menu, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case 0:
+                                Toast.makeText(activity,"Compartiendo en redes sociales...", 
+                                        Toast.LENGTH_SHORT ).show();
+                                break;
+                            case 1:
+                                lstBooks.remove(position);
+                                adaptador.notifyDataSetChanged();
+                                break;
+                            case 2:
+                                lstBooks.add(lstBooks.get(position));
+                                adaptador.notifyDataSetChanged();
+                                break;
+                        }    
+                    }
+                });
+                builder.create().show();
+                return true;
+            }
+        });
 
         return inflatedView;
 

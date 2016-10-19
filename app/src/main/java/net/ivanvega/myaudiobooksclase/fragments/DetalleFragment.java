@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceFragmentCompat;
+import android.support.v7.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -154,6 +156,14 @@ implements MediaPlayer.OnPreparedListener,
         mediaController.setAnchorView(
                 activity.findViewById(R.id.main_fragment_detalle)
         );
+
+        if (PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("pref_autoreproducir",false)) {
+
+            mediaController.show();
+            start();
+
+        }
+
         Toast.makeText(activity,"Presione para reproducir", Toast.LENGTH_SHORT).show();
     }
 
